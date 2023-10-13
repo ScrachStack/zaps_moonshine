@@ -1,3 +1,5 @@
+
+-- Support https://discord.gg/cfxdev
 Config = {
     brewProp = "mp006_p_moonshiner_still03x",
     mashProp = "model_name_for_barrel",
