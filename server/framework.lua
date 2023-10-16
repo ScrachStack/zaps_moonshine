@@ -1,7 +1,7 @@
 if GetResourceState('vorp_core') ~= 'missing' then
-    vorp = false 
+    vorp = true 
 else 
-    vorp = true
+    vorp = false 
 end
 if vorp then 
 local VORPcore = {}
@@ -13,8 +13,9 @@ Inventory = exports.vorp_inventory:vorp_inventoryApi()
 end
 
 if GetResourceState('redem_roleplay') ~= 'missing' then
-    redem = false
-else 
     Core = exports["redem_roleplay"]:RedEM()
     redem = true
+
+else
+    redem = false 
 end
