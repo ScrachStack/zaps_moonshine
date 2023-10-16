@@ -3,7 +3,11 @@
 RegisterNetEvent('moonshine:server:brew')
 AddEventHandler('moonshine:server:brew', function()
     local _source = source
-    local User = VORPcore.getUser(_source) 
+    if vorp then 
+     User = VORPcore.getUser(_source)
+    elseif redem then
+         User = Core.GetPlayer(_source)
+end 
     local player = User.getUsedCharacter
 
     local hasAllRequirements = true
@@ -27,8 +31,13 @@ AddEventHandler('moonshine:server:brew', function()
             for _, reward in pairs(Config.Brewing.Rewards) do
                 Inventory.addItem(_source, reward.item, reward.quantity)
             end
-            TriggerClientEvent("vorp:TipRight", _source, "Successfully brewed moonshine!", 4000)
-        else
+            if vorp then 
+                TriggerClientEvent("vorp:TipRight", _source, "Successfully brewed moonshine!", 4000)
+            else 
+                TriggerClientEvent("redem_roleplay:NotifyRight", _source, "Successfully brewed moonshine!", 4000)
+
+            end 
+            else
             if Config.Brewing.FailurePenalty.removeRequirements then
                 for _, req in pairs(Config.Brewing.Requirements) do
                     Inventory.subItem(_source, req.item, req.quantity)
@@ -40,10 +49,19 @@ AddEventHandler('moonshine:server:brew', function()
                     Inventory.addItem(_source, reward.item, reducedQuantity)
                 end
             end
-            TriggerClientEvent("vorp:TipRight", _source, "Brewing failed!", 4000)
+            if vorp then 
+                TriggerClientEvent("vorp:TipRight", _source, "Brewing failed!", 4000)
+            else 
+                TriggerClientEvent("redem_roleplay:NotifyRight", _source, "Brewing failed!", 4000)
+            end
         end
     else
+        if vorp then 
+
         TriggerClientEvent("vorp:TipRight", _source, "You don't have the required items for brewing.", 4000)
+        else 
+            TriggerClientEvent("redem_roleplay:NotifyRight", _source, "You don't have the required items for brewing.", 4000)
+    end
     end
 end)
 
