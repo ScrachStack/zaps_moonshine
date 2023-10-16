@@ -1,22 +1,27 @@
 CreateThread(function()
     while true do
-        Citizen.Wait(0)
         local x, y, z = table.unpack(GetEntityCoords(PlayerPedId()))
-        
         local isNearStill = DoesObjectOfTypeExistAtCoords(x, y, z, 1.5, joaat(Config.brewProp), true)
         local isNearBarrel = DoesObjectOfTypeExistAtCoords(x, y, z, 1.5, joaat(Config.mashProp), true)
-        if isNearStill  then
+        local stillEntity = GetClosestObjectOfType(x, y, z, 1.5, joaat(Config.brewProp), false, false, false)
+        local damageHealth = GetObjectFragmentDamageHealth(stillEntity, true)
+
+        Citizen.Wait(3)
+        if isNearStill and damageHealth > 0.38533836603165  then
             DrawTxt(Config.Translation.createAlcohol, 0.50, 0.75, 1.9, 0.5, true, 255, 255, 255, 255, true)
             if IsControlJustReleased(0, 0xCEFD9220) then
                 TriggerEvent('moonshine:brewAlcohol')
             end
             DrawTxt(Config.Translation.destroyStill, 0.50, 0.85, 0.7, 0.5, true, 255, 0, 0, 255, true)
-            if IsControlJustReleased(0, 0x3B24C470) then  
+            if IsControlJustReleased(0, 0x3B24C470) then  -- Assuming 0x3FEF770D corresponds to the "F" key
+                print("still: Debug")
                 TriggerEvent('moonshine:destroyStill')
+                
             end        
         elseif isNearBarrel then
             DrawTxt(Config.Translation.createMash, 0.50, 0.95, 0.7, 0.5, true, 255, 255, 255, 255, true)
             if IsControlJustReleased(0, 0x760A9C6F) then
+                print("Mash: Debug")
                 TriggerEvent('moonshine:createMash')
             end
         end
@@ -34,8 +39,13 @@ local animDict = "script_re@moonshine_camp@player_put_in_herbs"
 local animName = "put_in_still" 
 TaskPlayAnim(PlayerPedId(), animDict, animName, 8.0, -8.0, -1, 0, 0, false, false, false)
 Citizen.Wait(Config.brewTime)
-
-TriggerServerEvent('moonshine:server:brew')
+local chanceOfExplosion = Config.Brewing.FailureRate 
+local randomNumber = math.random()
+if randomNumber <= chanceOfExplosion then
+    TriggerExplosion()
+else
+    TriggerServerEvent('moonshine:server:brew')
+end
     end)
 end)
 RegisterNetEvent('moonshine:createMash')
@@ -91,3 +101,12 @@ RegisterCommand('placestill', function()
 TriggerEvent('moonshine:client:placeStill')
 
 end, false)
+
+
+function TriggerExplosion()
+    local playerPed = PlayerPedId()
+    local x, y, z = table.unpack(GetEntityCoords(playerPed, false))
+
+    AddExplosion(x, y, z, 1, 1.0, true, false, 1.0)
+end
+
