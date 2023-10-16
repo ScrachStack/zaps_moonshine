@@ -12,3 +12,11 @@ end)
 else 
     
 end
+
+
+if GetResourceState('redem_roleplay') ~= 'missing' then
+    redem = false
+else 
+    Core = exports["redem_roleplay"]:RedEM()
+    redem = true
+end
