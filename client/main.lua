@@ -1,13 +1,14 @@
 CreateThread(function()
     while true do
+        local wa = 3000
         local x, y, z = table.unpack(GetEntityCoords(PlayerPedId()))
         local isNearStill = DoesObjectOfTypeExistAtCoords(x, y, z, 1.5, joaat(Config.brewProp), true)
         local isNearBarrel = DoesObjectOfTypeExistAtCoords(x, y, z, 1.5, joaat(Config.mashProp), true)
         local stillEntity = GetClosestObjectOfType(x, y, z, 1.5, joaat(Config.brewProp), false, false, false)
         local damageHealth = GetObjectFragmentDamageHealth(stillEntity, true)
 
-        Citizen.Wait(3)
         if isNearStill and damageHealth > 0.38533836603165  then
+            wa = 3  
             DrawTxt(Config.Translation.createAlcohol, 0.50, 0.75, 1.9, 0.5, true, 255, 255, 255, 255, true)
             if IsControlJustReleased(0, 0xCEFD9220) then
                 TriggerEvent('moonshine:brewAlcohol')
@@ -19,14 +20,17 @@ CreateThread(function()
                 
             end        
         elseif isNearBarrel then
+            wa = 3  
             DrawTxt(Config.Translation.createMash, 0.50, 0.95, 0.7, 0.5, true, 255, 255, 255, 255, true)
             if IsControlJustReleased(0, 0x760A9C6F) then
                 print("Mash: Debug")
                 TriggerEvent('moonshine:createMash')
             end
         end
+        Citizen.Wait(wa)
     end
 end)
+
 RegisterNetEvent('moonshine:brewAlcohol')
 AddEventHandler('moonshine:brewAlcohol', function()
     Citizen.CreateThread(function()
