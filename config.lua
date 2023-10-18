@@ -25,11 +25,29 @@ Config = {
         },
     },
 
+    Farming = {
+        Crops = {
+            {crop = "corn", growTime = 60000},  -- Grow time in seconds
+            {crop = "wheat", growTime = 45000},
+        },
+        HarvestAnimDict = '',
+        HarvestAnim = '',
+        Locations = {
+            {x = 123.4, y = 567.8, z = 90.1, radius = 10.0},  
+            {x = 223.4, y = 267.8, z = 50.1, radius = 15.0},  
+        
+        },
+    
+    },
 
     Translation = {
         createAlcohol = "Press [E] to create alcohol",
         createMash = "Press [E] to create mash",
         destroyStill = "Press [F] to destroy (pickup) still",
-        placeStill = "Press [G] to place still"
+        placeStill = "Press [G] to place still",
+        startFarming = "Press [E] to start farming",
+        farmingInProgress = "Farming in progress...",
+        farmingComplete = "Farming complete!",
+        notInFarmingArea = "You are not in a farming area",    
     }
 }
