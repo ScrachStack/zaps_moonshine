@@ -3,3 +3,6 @@
 # zaps_moonshine
 
 Support: https://discord.gg/cfxdev
+
+## Credits
+- huzurweriN Helping with the vorp-inventory API
