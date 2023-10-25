@@ -25,6 +25,20 @@ Config = {
         },
     },
 
+      UsableItems = {
+        ['moonshine'] = {
+            removeItems = {
+                {item = 'moonshine', count = 1},
+            },
+            addItems = {
+               -- {item = '', count = 1}
+            },
+            notification = 'Drinking Moonshine',
+           -- clientEffect = 'here'  -- specify client-side effect here
+        },
+        
+
+    },
     Farming = {
         Crops = {
             {crop = "corn", growTime = 60000},  -- Grow time in seconds
@@ -39,7 +53,6 @@ Config = {
         },
     
     },
-
     Translation = {
         createAlcohol = "Press [E] to create alcohol",
         createMash = "Press [E] to create mash",
