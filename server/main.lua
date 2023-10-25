@@ -5,8 +5,6 @@ AddEventHandler('moonshine:server:brew', function()
     local _source = source
     if vorp then 
      User = VORPcore.getUser(_source)
-    elseif redem then
-         User = Core.GetPlayer(_source)
 end 
     local player = User.getUsedCharacter
 
@@ -33,9 +31,6 @@ end
             end
             if vorp then 
                 TriggerClientEvent("vorp:TipRight", _source, "Successfully brewed moonshine!", 4000)
-            else 
-                TriggerClientEvent("redem_roleplay:NotifyRight", _source, "Successfully brewed moonshine!", 4000)
-
             end 
             else
             if Config.Brewing.FailurePenalty.removeRequirements then
@@ -51,16 +46,12 @@ end
             end
             if vorp then 
                 TriggerClientEvent("vorp:TipRight", _source, "Brewing failed!", 4000)
-            else 
-                TriggerClientEvent("redem_roleplay:NotifyRight", _source, "Brewing failed!", 4000)
             end
         end
     else
         if vorp then 
 
         TriggerClientEvent("vorp:TipRight", _source, "You don't have the required items for brewing.", 4000)
-        else 
-            TriggerClientEvent("redem_roleplay:NotifyRight", _source, "You don't have the required items for brewing.", 4000)
     end
     end
 end)
