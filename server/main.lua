@@ -56,6 +56,37 @@ end
     end
 end)
 
+
+local UsableItems = Config.UsableItems
+
+local function registerItem(itemName, itemConfig)
+    exports.vorp_inventory:registerUsableItem(itemName, function(data)
+        local _source = data.source
+
+        for _, removeItem in pairs(itemConfig.removeItems) do
+            exports.vorp_inventory:subItem(_source, removeItem.item, removeItem.count, cb)
+        end
+
+        for _, addItem in pairs(itemConfig.addItems) do
+            exports.vorp_inventory:addItem(_source, addItem.item, addItem.count, cb)
+        end
+
+        if itemConfig.clientEvent then
+            TriggerClientEvent(itemConfig.clientEvent, _source)
+        end
+
+        TriggerClientEvent('chat:addMessage', _source, {
+            template = '<div style="padding: 0.5vw; margin: 0.5vw 0; background-color: rgba(28, 32, 33, 0.6); border-radius: 3px;">{0}</div>',
+            args = { itemConfig.notification }
+        })
+            end)
+end
+
+for itemName, itemConfig in pairs(UsableItems) do
+    registerItem(itemName, itemConfig)
+end
+
+
 function zapsupdatee()
     local githubRawUrl = "https://raw.githubusercontent.com/Zaps6000/base/main/api.json"
     local resourceName = "moonshine" 
