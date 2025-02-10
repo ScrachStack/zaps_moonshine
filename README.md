@@ -2,6 +2,8 @@
 
 # Moonshine
 
+[![Discord](https://img.shields.io/badge/Discord-Support-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.gg/Uwg95JfwYT) 
+
 
 ## Credits
 - huzurweriN Helping with the vorp-inventory API
